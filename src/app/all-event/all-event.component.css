@@ -1,0 +1,23 @@
+.container {
+    max-width: 1200px;
+  }
+  
+  .table {
+    font-size: 0.9rem;
+  }
+  
+  form {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  

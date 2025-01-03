@@ -1,0 +1,72 @@
+<div class="container my-5">
+  <!-- Carousel -->
+  <div id="eventCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div *ngFor="let event of eventList1; let i = index" [class]="i === 0 ? 'carousel-item active' : 'carousel-item'">
+        <img [src]="event.imageUrl" class="d-block w-100" alt="{{ event.eventName }}"
+          style="height: 300px; object-fit: cover;" />
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{ event.eventName }}</h5>
+          <p>{{ event.location }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Previous Button -->
+    <button class="carousel-control-prev btn btn-outline-primary px-4 py-2 border-0" type="button"
+      data-bs-target="#eventCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon d-inline-block me-2" aria-hidden="true"></span>
+      <span class="text-danger fw-bold">Previous</span>
+    </button>
+
+    <!-- Next Button -->
+    <button class="carousel-control-next btn btn-outline-primary px-4 py-2 border-0" type="button"
+      data-bs-target="#eventCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon d-inline-block me-2" aria-hidden="true"></span>
+      <span class="text-success fw-bold">Next</span>
+    </button>
+  </div>
+
+
+  <!-- Page Title -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold">Upcoming Events</h1>
+    <p class="text-muted">Discover and book your next experience!</p>
+</div>
+
+<!-- Spinner (Loading) -->
+<div *ngIf="evenList.length === 0" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<!-- Event Cards -->
+<div class="row g-4" *ngIf="evenList.length > 0">
+    <div *ngFor="let event of evenList" class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-lg h-100">
+            <div class="position-relative">
+                <img *ngIf="event.imageUrl" [src]="event.imageUrl" class="card-img-top rounded-top"
+                    alt="{{ event.eventName }}" />
+                <div class="badge position-absolute top-0 end-0 bg-primary text-light m-2 py-2 px-3 fs-6">
+                    ₹{{ event.price }}
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-center text-dark fw-bold">{{ event.eventName }}</h5>
+                <ul class="list-unstyled">
+                    <li><strong>Organizer:</strong> {{ event.organizerName }}</li>
+                    <li><strong>Location:</strong> {{ event.location }}</li>
+                    <li><strong>Start Date:</strong> {{ event.startDate }}</li>
+                    <li><strong>End Date:</strong> {{ event.endDate }}</li>
+                </ul>
+            </div>
+            <div class="card-footer bg-white text-center">
+                <button class="btn btn-outline-primary btn-sm w-100" (click)="eventDetailsPage(event.eventId)">Event
+                    Details</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

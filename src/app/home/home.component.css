@@ -1,0 +1,28 @@
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card img {
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    margin-top: 10px;
+  }
+  
+  .badge {
+    border-radius: 20px;
+  }
+  
+  .btn-outline-primary {
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  

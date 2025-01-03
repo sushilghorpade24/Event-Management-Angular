@@ -1,0 +1,146 @@
+<div class="container mt-5">
+  <!-- Page Title -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-danger">Event Details</h1>
+    <p class="text-muted">Dive into the exciting details of your favorite events!</p>
+  </div>
+
+  <div class="row justify-content-center">
+    <!-- Event Details Section -->
+    <div class="col-md-6 mb-4">
+      <!-- Back Button -->
+      <button class="btn btn-outline-danger mb-3" (click)="goBack()">
+        <i class="bi bi-arrow-left-circle"></i> Back
+      </button>
+
+      <!-- Event Details Card -->
+      <div class="card border-0 shadow-sm rounded event-card">
+        <div *ngIf="eventDetails.imageUrl; else noImage">
+          <img [src]="eventDetails.imageUrl" class="card-img-top rounded-top" alt="{{ eventDetails.eventName }}"
+            style="height: 300px; object-fit: cover;">
+        </div>
+        <ng-template #noImage>
+          <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-top"
+            style="height: 300px;">
+            <h5>No Image Available</h5>
+          </div>
+        </ng-template>
+        <div class="card-body">
+          <h3 class="text-danger mb-3">{{ eventDetails.eventName }}</h3>
+          <p><strong>Description:</strong> {{ eventDetails.description }}</p>
+          <p><i class="bi bi-geo-alt text-danger"></i> <strong>Location:</strong> {{ eventDetails.location }}</p>
+          <p><i class="bi bi-calendar-event text-success"></i> <strong>Start:</strong> {{ eventDetails.startDate }} at
+            {{ eventDetails.startTime }}:00</p>
+          <p><i class="bi bi-calendar-x text-danger"></i> <strong>End:</strong> {{ eventDetails.endDate }} at {{
+            eventDetails.endTime }}:00</p>
+          <p><strong>Capacity:</strong> {{ eventDetails.capacity }}</p>
+          <p><strong>Price:</strong> ₹{{ eventDetails.price }}</p>
+          <p><strong>Organizer ID:</strong> {{ eventDetails.organizerId }}</p>
+          <p><strong>Identity Mandatory:</strong> {{ eventDetails.isIdentityMandatory ? 'Yes' : 'No' }}</p>
+          <p><strong>Couple Entry Mandatory:</strong> {{ eventDetails.isCoupleEntryMandatory ? 'Yes' : 'No' }}</p>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+          <span class="text-muted">Event ID: {{ eventDetails.eventId }}</span>
+          <button class="btn btn-danger btn-sm px-4" (click)="showBookingPopup()">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Organizer's Other Events -->
+    <div class="col-md-6">
+      <h3 class="text-center text-secondary mb-4">Other Events by Organizer</h3>
+      <div *ngFor="let event of orgEvents" class="card mb-3 border-0 shadow-sm rounded event-card">
+        <img [src]="event.imageUrl" class="card-img-top rounded-top" alt="{{ event.eventName }}"
+          style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="text-danger">{{ event.eventName }}</h5>
+          <p><i class="bi bi-calendar-event text-success"></i> <strong>Start:</strong> {{ event.startDate }} at {{
+            event.startTime }}</p>
+          <p><i class="bi bi-calendar-x text-danger"></i> <strong>End:</strong> {{ event.endDate }}</p>
+          <p><strong>Price:</strong> ₹{{ event.price }}</p>
+          <p><i class="bi bi-geo-alt text-danger"></i> <strong>Location:</strong> {{ event.location }}</p>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+          <span class="text-muted">Event ID: {{ event.eventId }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Popup -->
+  <!-- Booking Popup -->
+  <div *ngIf="isBookingPopupVisible" class="modal" style="display: block; background: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title">Book Tickets</h5>
+          <button type="button" class="btn-close" (click)="hideBookingPopup()" aria-label="Close"></button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+
+          <!-- Name and Age Row -->
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-md-6">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" id="name" [(ngModel)]="ticketDetails.name" class="form-control"
+                placeholder="Enter your name" />
+            </div>
+            <div class="col-md-6">
+              <label for="age" class="form-label">Age</label>
+              <input type="number" id="age" [(ngModel)]="ticketDetails.age" class="form-control"
+                placeholder="Enter your age" />
+            </div>
+          </div>
+
+          <!-- ID Type and ID Number Row -->
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-md-6">
+              <label for="identityCard" class="form-label">Identity Card Type</label>
+              <select id="identityCard" class="form-select" [(ngModel)]="ticketDetails.identityCard">
+                <option value="" disabled>Select ID type</option>
+                <option value="Aadhar">Aadhar Card</option>
+                <option value="Passport">Passport</option>
+                <option value="DrivingLicense">Driving License</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="cardNo" class="form-label">Identity Card Number</label>
+              <input type="text" id="cardNo" [(ngModel)]="ticketDetails.cardNo" class="form-control"
+                placeholder="Enter ID card number" />
+            </div>
+          </div>
+
+          <!-- Contact Number and Tickets Row -->
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-md-6">
+              <label for="contactNo" class="form-label">Contact Number</label>
+              <input type="tel" id="contactNo" class="form-control" [(ngModel)]="ticketDetails.contactNo"
+                placeholder="Enter your contact number" />
+            </div>
+            <div class="col-md-6">
+              <label for="noOfTickets" class="form-label">Number of Tickets</label>
+              <input type="number" id="noOfTickets" class="form-control" min="1" [(ngModel)]="eventBook.noOfTickets"
+                placeholder="Enter tickets" />
+            </div>
+          </div>
+          <!-- Form Valid or not -->
+          <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="confirmFields" [(ngModel)]="isFormValid" />
+            <label class="form-check-label" for="confirmFields">Confirm all fields are filled</label>
+          </div>
+
+          <!-- Confirm Booking Button -->
+          <div class="text-center">
+
+            <button type="button" class="btn btn-danger w-100 py-2 " (click)="booksEvents()">
+              <i class="bi bi-ticket-perforated"></i> Confirm Booking
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

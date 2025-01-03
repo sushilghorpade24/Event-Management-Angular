@@ -1,0 +1,41 @@
+<main class="main-login">
+    <div class="left-login">
+        <!-- <h1>Login<br>And Be A Part Of our EventBooker</h1> -->
+        <img src="https://i.postimg.cc/YC13sX2Z/Astronaut-cuate.png" class="left-login-img" alt="astronaut image">
+    </div>
+
+    <div class="right-login">
+        <div class="card-login">
+            <h1>Login</h1>
+            <div class="textfield">
+                <label for="user">ContactNo</label>
+                <input type="text" [(ngModel)]="LoginCust.ContactNo" name="user" placeholder="User">
+            </div>
+
+            <div class="textfield">
+                <label for="password">Password</label>
+                <input type="password" [(ngModel)]="LoginCust.Password" name="password" placeholder="Password">
+
+            </div>
+            <!-- for validating user login tyape -->
+            <div class="textfields">
+                <label for="userType" class="form-label">Select User Type:</label>
+                <select name="userType" [(ngModel)]="userType" id="userType" class="form-select">
+                    <option value="" disabled selected>Select User Type</option> <!-- Placeholder option -->
+                    <option value="Customer">👤 Customer</option>
+                    <option value="Organizer">📅 Organizer</option>
+                </select>
+            </div>
+
+
+
+
+
+            <button class="btn-login" (click)="loginCust()">Login</button>
+
+            <div class="register-link">
+                <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+            </div>
+        </div>
+    </div>
+</main>

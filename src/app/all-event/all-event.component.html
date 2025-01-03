@@ -1,0 +1,114 @@
+<div class="container my-5">
+  <!-- Header -->
+  <div class="text-center mb-4">
+    <h1 class="display-6">Event Management</h1>
+    <p class="text-muted">Manage your events seamlessly.</p>
+  </div>
+
+  <div class="row">
+    <!-- Event List Section -->
+    <div [ngClass]="{ 'col-md-6': isFormVisible, 'col-md-12': !isFormVisible }">
+      <div class="card shadow-sm mb-4 bg-light">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Event List</h5>
+          <button class="btn btn-primary btn-sm" (click)="toggleForm()">Create New Event/Back To List</button>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>Event ID</th>
+                <th>Event Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let event of allEventLists">
+                <td>{{ event.eventId }}</td>
+                <td>{{ event.eventName }}</td>
+                <td>{{ event.startDate }}</td>
+                <td>{{ event.endDate }}</td>
+                <td>
+                  <button class="btn btn-sm btn-primary" (click)="onEdit(event)">Edit</button>
+                  <button class="btn btn-sm btn-danger ms-2" (click)="deleteEvent(event.eventId)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Form Section -->
+    <div *ngIf="isFormVisible" class="col-md-6">
+      <div class="card shadow-sm bg-white">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">{{ CreateNewEvent.eventId === 0 ? 'Create New Event' : 'Update Event' }}</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <label for="eventName" class="form-label">Event Name</label>
+              <input type="text" id="eventName" class="form-control" [(ngModel)]="CreateNewEvent.eventName" name="eventName" required />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea id="description" class="form-control" [(ngModel)]="CreateNewEvent.description" name="description" rows="3" required></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" id="location" class="form-control" [(ngModel)]="CreateNewEvent.location" name="location" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="capacity" class="form-label">Capacity</label>
+                <input type="number" id="capacity" class="form-control" [(ngModel)]="CreateNewEvent.capacity" name="capacity" required />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" id="startDate" class="form-control" [(ngModel)]="CreateNewEvent.startDate" name="startDate" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="startTime" class="form-label">Start Time</label>
+                <input type="time" id="startTime" class="form-control" [(ngModel)]="CreateNewEvent.startTime" name="startTime" required />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" id="endDate" class="form-control" [(ngModel)]="CreateNewEvent.endDate" name="endDate" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="endTime" class="form-label">End Time</label>
+                <input type="time" id="endTime" class="form-control" [(ngModel)]="CreateNewEvent.endTime" name="endTime" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input type="number" id="price" class="form-control" [(ngModel)]="CreateNewEvent.price" name="price" required />
+            </div>
+            <div class="mb-3">
+              <label for="imageUrl" class="form-label">Image URL</label>
+              <input type="text" id="imageUrl" class="form-control" [(ngModel)]="CreateNewEvent.imageUrl" name="imageUrl" />
+            </div>
+            <!-- <div class="mb-3">
+              <label for="organizerId" class="form-label">Organizer ID</label>
+              <input type="number" id="organizerId" class="form-control" [(ngModel)]="CreateNewEvent.organizerId" name="organizerId" required />
+            </div> -->
+            <button
+              type="submit"
+              class="btn {{ CreateNewEvent.eventId === 0 ? 'btn-primary' : 'btn-warning' }} w-100"
+              (click)="CreateNewEvent.eventId === 0 ? createEvents() : updateEvent()"
+            >
+              {{ CreateNewEvent.eventId === 0 ? 'Create Event' : 'Update Event' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
