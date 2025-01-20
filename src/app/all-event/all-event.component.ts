@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { EventApisService } from '../Service/event-apis.service';
 import { FormsModule } from '@angular/forms';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-all-event',
   standalone: true,
-  imports: [FormsModule,NgFor,NgClass,NgIf],
+  imports: [FormsModule,NgFor,NgClass,NgIf,CommonModule],
   templateUrl: './all-event.component.html',
   styleUrl: './all-event.component.css'
 })
@@ -66,7 +66,7 @@ onEdit(data:any){
 updateEvent(){
 this.eventSer.updateEvents(this.CreateNewEvent).subscribe((res:any)=>{
   if(res.result==true){
-    alert("event Updated Sucessfully");
+    alert("Event Updated Sucessfully");
     this.getAllEvents();
   }else{
     alert(res.message);

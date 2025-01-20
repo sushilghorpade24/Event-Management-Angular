@@ -10,3 +10,51 @@
   transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+/* animation styles */
+
+/* Card Base Style */
+.event-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle initial shadow */
+}
+
+/* Card Hover Effect */
+.event-card:hover {
+  transform: translateY(-10px); /* Lift the card upward */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+
+/* Image Animation */
+.event-card img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.event-card:hover img {
+  transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+/* Card Footer Button Animation */
+.card-footer button {
+  transition: background-color 0.3s ease-in-out, transform 0.2s, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the button */
+}
+
+.card-footer button:hover {
+  background-color: #c82333; /* Darker red */
+  transform: scale(1.1); /* Slightly enlarge button */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Add a Soft Entry Animation (Optional) */
+.event-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

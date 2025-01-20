@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div>
   <!-- Page Title -->
   <div class="text-center mb-5">
     <h1 class="display-5 fw-bold text-danger">Event Details</h1>
@@ -29,9 +29,11 @@
           <h3 class="text-danger mb-3">{{ eventDetails.eventName }}</h3>
           <p><strong>Description:</strong> {{ eventDetails.description }}</p>
           <p><i class="bi bi-geo-alt text-danger"></i> <strong>Location:</strong> {{ eventDetails.location }}</p>
-          <p><i class="bi bi-calendar-event text-success"></i> <strong>Start:</strong> {{ eventDetails.startDate }} at
+          <p><i class="bi bi-calendar-event text-success"></i> <strong>Start:</strong> {{ eventDetails.startDate |
+            date:'shortDate'}} at
             {{ eventDetails.startTime }}:00</p>
-          <p><i class="bi bi-calendar-x text-danger"></i> <strong>End:</strong> {{ eventDetails.endDate }} at {{
+          <p><i class="bi bi-calendar-x text-danger"></i> <strong>End:</strong> {{ eventDetails.endDate |
+            date:'shortDate' }} at {{
             eventDetails.endTime }}:00</p>
           <p><strong>Capacity:</strong> {{ eventDetails.capacity }}</p>
           <p><strong>Price:</strong> ₹{{ eventDetails.price }}</p>
@@ -42,6 +44,7 @@
         <div class="card-footer bg-light d-flex justify-content-between align-items-center">
           <span class="text-muted">Event ID: {{ eventDetails.eventId }}</span>
           <button class="btn btn-danger btn-sm px-4" (click)="showBookingPopup()">Book Now</button>
+          <button class="btn btn-danger btn-sm px-4" (click)="navigateBook(eventDetails.eventId)">Book Now</button>
         </div>
       </div>
     </div>
@@ -54,14 +57,19 @@
           style="height: 200px; object-fit: cover;">
         <div class="card-body">
           <h5 class="text-danger">{{ event.eventName }}</h5>
-          <p><i class="bi bi-calendar-event text-success"></i> <strong>Start:</strong> {{ event.startDate }} at {{
+          <p><i class="bi bi-calendar-event text-success"></i> <strong>Start:</strong> {{ event.startDate |
+            date:'yyyy-MM-dd' }} at {{
             event.startTime }}</p>
-          <p><i class="bi bi-calendar-x text-danger"></i> <strong>End:</strong> {{ event.endDate }}</p>
+          <p><i class="bi bi-calendar-x text-danger"></i> <strong>End:</strong> {{ event.endDate |date:'yyyy-MM-dd' }}
+          </p>
           <p><strong>Price:</strong> ₹{{ event.price }}</p>
           <p><i class="bi bi-geo-alt text-danger"></i> <strong>Location:</strong> {{ event.location }}</p>
         </div>
         <div class="card-footer bg-light d-flex justify-content-between align-items-center">
           <span class="text-muted">Event ID: {{ event.eventId }}</span>
+          <!-- new page for booking events  -->
+
+          <button class="btn btn-danger btn-sm px-4" (click)="navigateBook(event.eventId)">Book Now</button>
         </div>
       </div>
     </div>
@@ -86,12 +94,20 @@
             <div class="col-md-6">
               <label for="name" class="form-label">Full Name</label>
               <input type="text" id="name" [(ngModel)]="ticketDetails.name" class="form-control"
-                placeholder="Enter your name" />
+                placeholder="Enter your name" required minlength="3" #name="ngModel" />
+              <div *ngIf="name.invalid && name.touched" class="text-danger">
+                <small *ngIf="name.errors?.['required']">Full name is required.</small>
+                <small *ngIf="name.errors?.['minlength']">Name must be at least 3 characters long.</small>
+              </div>
             </div>
             <div class="col-md-6">
               <label for="age" class="form-label">Age</label>
               <input type="number" id="age" [(ngModel)]="ticketDetails.age" class="form-control"
-                placeholder="Enter your age" />
+                placeholder="Enter your age" required min="1" #age="ngModel" />
+              <div *ngIf="age.invalid && age.touched" class="text-danger">
+                <small *ngIf="age.errors?.['required']">Age is required.</small>
+                <small *ngIf="age.errors?.['min']">Age must be a positive number.</small>
+              </div>
             </div>
           </div>
 
@@ -99,17 +115,25 @@
           <div class="row g-3 align-items-center mb-3">
             <div class="col-md-6">
               <label for="identityCard" class="form-label">Identity Card Type</label>
-              <select id="identityCard" class="form-select" [(ngModel)]="ticketDetails.identityCard">
+              <select id="identityCard" class="form-select" [(ngModel)]="ticketDetails.identityCard" required
+                #identityCard="ngModel">
                 <option value="" disabled>Select ID type</option>
                 <option value="Aadhar">Aadhar Card</option>
                 <option value="Passport">Passport</option>
                 <option value="DrivingLicense">Driving License</option>
               </select>
+              <div *ngIf="identityCard.invalid && identityCard.touched" class="text-danger">
+                <small>ID type is required.</small>
+              </div>
             </div>
             <div class="col-md-6">
               <label for="cardNo" class="form-label">Identity Card Number</label>
               <input type="text" id="cardNo" [(ngModel)]="ticketDetails.cardNo" class="form-control"
-                placeholder="Enter ID card number" />
+                placeholder="Enter ID card number" required minlength="6" #cardNo="ngModel" />
+              <div *ngIf="cardNo.invalid && cardNo.touched" class="text-danger">
+                <small *ngIf="cardNo.errors?.['required']">ID card number is required.</small>
+                <small *ngIf="cardNo.errors?.['minlength']">ID card number must be at least 6 characters long.</small>
+              </div>
             </div>
           </div>
 
@@ -118,24 +142,37 @@
             <div class="col-md-6">
               <label for="contactNo" class="form-label">Contact Number</label>
               <input type="tel" id="contactNo" class="form-control" [(ngModel)]="ticketDetails.contactNo"
-                placeholder="Enter your contact number" />
+                placeholder="Enter your contact number" required pattern="^[0-9]{10}$" #contactNo="ngModel" />
+              <div *ngIf="contactNo.invalid && contactNo.touched" class="text-danger">
+                <small *ngIf="contactNo.errors?.['required']">Contact number is required.</small>
+                <small *ngIf="contactNo.errors?.['pattern']">Contact number must be a valid 10-digit number.</small>
+              </div>
             </div>
             <div class="col-md-6">
               <label for="noOfTickets" class="form-label">Number of Tickets</label>
               <input type="number" id="noOfTickets" class="form-control" min="1" [(ngModel)]="eventBook.noOfTickets"
-                placeholder="Enter tickets" />
+                placeholder="Enter tickets" required #noOfTickets="ngModel" />
+              <div *ngIf="noOfTickets.invalid && noOfTickets.touched" class="text-danger">
+                <small *ngIf="noOfTickets.errors?.['required']">Number of tickets is required.</small>
+                <small *ngIf="noOfTickets.errors?.['min']">At least 1 ticket must be booked.</small>
+              </div>
             </div>
           </div>
-          <!-- Form Valid or not -->
+
+          <!-- Form Valid or Not -->
           <div class="form-check mb-3">
-            <input type="checkbox" class="form-check-input" id="confirmFields" [(ngModel)]="isFormValid" />
+            <input type="checkbox" class="form-check-input" id="confirmFields" [(ngModel)]="isFormValid" required
+              #confirmFields="ngModel" />
             <label class="form-check-label" for="confirmFields">Confirm all fields are filled</label>
+            <div *ngIf="confirmFields.invalid && confirmFields.touched" class="text-danger">
+              <small>You must confirm that all fields are filled.</small>
+            </div>
           </div>
 
           <!-- Confirm Booking Button -->
           <div class="text-center">
-
-            <button type="button" class="btn btn-danger w-100 py-2 " (click)="booksEvents()">
+            <button type="button" class="btn btn-danger w-100 py-2" (click)="booksEvents()"
+              [disabled]="!isFormValid || name.invalid || age.invalid || identityCard.invalid || cardNo.invalid || contactNo.invalid || noOfTickets.invalid">
               <i class="bi bi-ticket-perforated"></i> Confirm Booking
             </button>
           </div>

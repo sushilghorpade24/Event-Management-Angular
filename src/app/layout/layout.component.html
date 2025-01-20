@@ -19,12 +19,15 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="home">Home</a>
         </li>
-        <li *ngIf="isCreateEventVisinble"  class="nav-item">
+        <li *ngIf="isCreateEventVisible" class="nav-item">
           <a class="nav-link" routerLink="allEvent">Create Events</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="">Empty</a>
-        </li> -->
+        <li *ngIf="isCreateEventVisible" class="nav-item">
+          <a class="nav-link" [routerLink]="['/createBooking', defaultId]">Bookings</a>
+        </li>
+        <li  class="nav-item">
+          <a class="nav-link" routerLink="mybookings">My Bookings</a>
+        </li>
         <!-- <li class="nav-item">
           <a class="nav-link" routerLink="">Empty</a>
         </li>
@@ -40,8 +43,12 @@
       </form>
       <!-- Login/Sign Up Buttons -->
       <div class="ms-lg-3">
-        <a routerLink="/login" class="btn btn-primary me-2">Login</a>
-        <a routerLink="/register" class="btn btn-outline-primary">Sign Up</a>
+        @if(userLogin){
+        <a (click)="onLogOut()" class="btn btn-primary me-2">Log Out</a>
+        } @else {
+        <a routerLink="/login" class="btn btn-primary me-2">Log in</a>
+        }
+        <!-- <a routerLink="/register" class="btn btn-outline-primary">Sign Up</a> -->
       </div>
     </div>
   </div>

@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventApisService } from '../Service/event-apis.service';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import bootstrap from '../../main.server';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule],
+  imports: [NgIf, NgFor, FormsModule,CommonModule],
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.css']
 })
@@ -123,6 +123,10 @@ isFormValid:boolean=false;
     noOfTickets: 0,
     EventBookingMembers: []
     }
+  };
+
+  navigateBook(Id:any){
+    this.router.navigateByUrl("createBooking/"+Id);
   }
 
 }

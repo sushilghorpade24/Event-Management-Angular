@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { EventApisService } from '../Service/event-apis.service';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { ReusableComponent } from '../reusable/reusable.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor,NgIf],
+  imports: [NgFor,NgIf,CommonModule,ReusableComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

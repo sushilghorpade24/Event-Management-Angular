@@ -57,13 +57,14 @@
                 <ul class="list-unstyled">
                     <li><strong>Organizer:</strong> {{ event.organizerName }}</li>
                     <li><strong>Location:</strong> {{ event.location }}</li>
-                    <li><strong>Start Date:</strong> {{ event.startDate }}</li>
-                    <li><strong>End Date:</strong> {{ event.endDate }}</li>
+                    <li><strong>Start Date:</strong> {{ event.startDate | date:'shortDate' }}</li>
+                    <li><strong>End Date:</strong> {{ event.endDate| date:'shortDate' }}</li>
                 </ul>
             </div>
             <div class="card-footer bg-white text-center">
                 <button class="btn btn-outline-primary btn-sm w-100" (click)="eventDetailsPage(event.eventId)">Event
                     Details</button>
+                   <!-- <app-reusable [btnName]="'Event Details'" [btnClass]="'btn btn-outline-primary btn-sm w-100'" (click)="eventDetailsPage(event.eventId)"/> -->
             </div>
         </div>
     </div>

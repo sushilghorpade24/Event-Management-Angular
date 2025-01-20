@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { BOOK_EVENT, CREATE_EVENT, CREATE_USER, DELETE_EVENT, FETCH_EVENT_DETAILS, GET_ALL_EVENTS, GET_ORGANISER_EVENTS, LOGIN_USER, UPDATE_EVENT } from '../constant/Constat';
+import { BOOK_EVENT, CREATE_EVENT, CREATE_USER, DELETE_BOOKING, DELETE_EVENT, FETCH_EVENT_DETAILS, GET_ALL_BOOKING, GET_ALL_EVENTS, GET_BOOKING_BY_CUST, GET_ORGANISER_EVENTS, LOGIN_USER, UPDATE_EVENT } from '../constant/Constat';
 import { Observable } from 'rxjs';
 import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventApisService {
+export class EventApisService{
 commonEventApi:string=environment.API_URL;
   constructor(private http:HttpClient) { 
 
@@ -45,6 +45,18 @@ commonEventApi:string=environment.API_URL;
 
    bookEvent(obj:any){
     return this.http.post(this.commonEventApi+BOOK_EVENT,obj);
+   };
+
+   getAllBooking(){
+    return this.http.get(this.commonEventApi+GET_ALL_BOOKING);
+   };
+
+   deletesBookings(id:number){
+   return this.http.get(this.commonEventApi+DELETE_BOOKING+id);
+   };
+
+   getBookingByCust(id:any){
+    return this.http.get(this.commonEventApi+GET_BOOKING_BY_CUST+id);
    }
 
 }

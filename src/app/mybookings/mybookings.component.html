@@ -1,0 +1,32 @@
+<div class="container-fluid mt-5">
+    <h3 class="mb-4 text-center">Event Bookings</h3>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered align-middle  w-100">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Sr.No</th>
+            <th scope="col">Event Name</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Organizer Name</th>
+            <th scope="col">Booking Number</th>
+            <th scope="col">Tickets</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of userBookings,let index=index">
+            <td>{{index+1}}</td>
+            <td>{{ booking.eventName }}</td>
+            <td>{{ booking.startDate | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ booking.startTime }}</td>
+            <td>{{ booking.endDate | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ booking.organizerName }}</td>
+            <td>{{ booking.bookingNo }}</td>
+            <td>{{ booking.noOfTickets }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,5 +1,8 @@
 .container {
-    max-width: 1200px;
+  width: 100% !important; /* Take full width of the page */
+  max-width: 100% !important; /* Ensure no width limit */
+  margin-left: 0 !important; /* Remove left margin if applied */
+  margin-right: 0 !important; /* Remove right margin if applied */
   }
   
   .table {

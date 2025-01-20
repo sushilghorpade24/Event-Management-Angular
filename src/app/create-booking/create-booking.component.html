@@ -1,0 +1,47 @@
+@if(loginUserType=='Organizer'){
+<div>
+  <h2 class="mb-4 text-center">Event Details</h2>
+  <table class="table table-hover align-middle text-center">
+    <thead class="table-dark">
+      <tr>
+        <th>Event Name</th>
+        <th>Start Date</th>
+        <th>Start Time</th>
+
+        <th>End Date</th>
+        <th>Organizer Name</th>
+
+        <th>Booking Number</th>
+        <th>Customer Name</th>
+        <th>Customer Mobile</th>
+        <th>Number of Tickets</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody class="table-light">
+      <tr *ngFor="let booking of bookingList">
+        <td><strong>{{ booking.eventName }}</strong></td>
+        <td>{{ booking.startDate | date:'yyyy-MM-dd' }}</td>
+
+        <td>{{ booking.startTime }}</td>
+
+        <td>{{ booking.endDate| date:'yyyy-MM-dd'}}</td>
+        <td>{{ booking.organizerName }}</td>
+
+        <td>{{ booking.bookingNo }}</td>
+        <td>{{ booking.customerName }}</td>
+        <td>{{ booking.customerMobile }}</td>
+        <td>{{ booking.noOfTickets }}</td>
+        <td>
+          <div style="display: flex; align-items: center;">
+            <i class="fas fa-edit" style="color: blue; font-size: 20px; margin-right: 10px;"></i>
+            <i class="fas fa-trash-alt" (click)="deleteBooking(booking.bookingId)"
+              style="color: red; font-size: 20px;"></i>
+          </div>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+}

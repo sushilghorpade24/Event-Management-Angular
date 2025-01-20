@@ -6,6 +6,8 @@ import { AllEventComponent } from './all-event/all-event.component';
 import { authGuard } from './guard/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { CreateBookingComponent } from './create-booking/create-booking.component';
+import { MybookingsComponent } from './mybookings/mybookings.component';
 
 export const routes: Routes = [
     {
@@ -35,8 +37,18 @@ export const routes: Routes = [
                 component: AllEventComponent,
                 canActivate: [authGuard] // Optional: Guard for specific child routes
             },
+            {
+                path:'mybookings',
+                component:MybookingsComponent,
+                canActivate: [authGuard]
+            }
            
         ]
+    },
+    {
+        path:'createBooking/:Id',
+        component:CreateBookingComponent,
+        // canActivate: [authGuard]
     },
     {
         path: "app-event-details/:Id",
