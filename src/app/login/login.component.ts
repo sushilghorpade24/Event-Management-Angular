@@ -15,7 +15,7 @@ import { EventApisService } from '../Service/event-apis.service';
 export class LoginComponent {
   // Define LoginCust object
   LoginCust: Login = new Login();
-  userType:any="";
+  // userType:any="";
 
   constructor(
     private router: Router,
@@ -25,12 +25,13 @@ export class LoginComponent {
 
   loginCust() {
     // Ensure LoginCust has valid data
-    if (this.LoginCust && this.LoginCust.ContactNo && this.userType) {
+    if (this.LoginCust.Password && this.LoginCust.ContactNo) {
+      //  && this.userType
       this.eventSer.loginUser(this.LoginCust).subscribe(
         (res: any) => {
           if (res.result === true) {
             debugger;
-            localStorage.setItem('userType',this.userType)
+            localStorage.setItem('userType',res.data.role)
             localStorage.setItem('CustId', res.data.userId);
            
             this.router.navigateByUrl('home'); // Redirect to home on success

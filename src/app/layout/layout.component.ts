@@ -14,9 +14,12 @@ import { NgIf } from '@angular/common';
 })
 export class LayoutComponent {
   userLogin=localStorage.getItem("CustId");
-  defaultId = '0'; 
+  defaultId = 123; 
   constructor(private router:Router){
     this.isNavVisible();
+  }
+  ngOnInit() {
+    this.isNavVisible();  
   }
   // constructor(private  router:Router){
 
@@ -29,7 +32,7 @@ export class LayoutComponent {
   isCreateEventVisible:boolean=false;
  
   isNavVisible(){
-    if(this.loginUserType=="Organizer"){
+    if(this.loginUserType=="organizer"){
       this.isCreateEventVisible=true;
     }else{
       this.isCreateEventVisible=false;

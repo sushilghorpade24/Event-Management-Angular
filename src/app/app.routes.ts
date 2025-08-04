@@ -40,7 +40,7 @@ export const routes: Routes = [
             {
                 path:'mybookings',
                 component:MybookingsComponent,
-                canActivate: [authGuard]
+                // canActivate: [authGuard]
             }
            
         ]

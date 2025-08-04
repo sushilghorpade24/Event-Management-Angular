@@ -1,6 +1,6 @@
 @if(loginUserType=='Organizer'){
 <div>
-  <h2 class="mb-4 text-center">Event Details</h2>
+  <h2 class="mb-4 text-center">Total Bookings</h2>
   <table class="table table-hover align-middle text-center">
     <thead class="table-dark">
       <tr>
@@ -34,7 +34,8 @@
         <td>{{ booking.noOfTickets }}</td>
         <td>
           <div style="display: flex; align-items: center;">
-            <i class="fas fa-edit" style="color: blue; font-size: 20px; margin-right: 10px;"></i>
+            <i class="fas fa-edit" style="color: blue; font-size: 20px; margin-right: 10px;"
+              (click)="onEdit(booking)"></i>
             <i class="fas fa-trash-alt" (click)="deleteBooking(booking.bookingId)"
               style="color: red; font-size: 20px;"></i>
           </div>
@@ -45,3 +46,128 @@
   </table>
 </div>
 }
+
+<!-- The Modal -->
+<div *ngIf="isFormVisible" id="bookingModal" class="modal" style="display: block; background: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Book Tickets</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Name and Age Row -->
+        <div class="row g-3 align-items-center mb-3">
+          <div class="col-md-6">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" id="name" [(ngModel)]="ticketDetails.name" class="form-control"
+              placeholder="Enter your name" required minlength="3" #name="ngModel" />
+            <div *ngIf="name.invalid && name.touched" class="text-danger">
+              <small *ngIf="name.errors?.['required']">Full name is required.</small>
+              <small *ngIf="name.errors?.['minlength']">
+                Name must be at least 3 characters long.
+              </small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" id="age" [(ngModel)]="ticketDetails.age" class="form-control"
+              placeholder="Enter your age" required min="1" #age="ngModel" />
+            <div *ngIf="age.invalid && age.touched" class="text-danger">
+              <small *ngIf="age.errors?.['required']">Age is required.</small>
+              <small *ngIf="age.errors?.['min']">Age must be a positive number.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- ID Type and ID Number Row -->
+        <div class="row g-3 align-items-center mb-3">
+          <div class="col-md-6">
+            <label for="identityCard" class="form-label">Identity Card Type</label>
+            <select id="identityCard" class="form-select" [(ngModel)]="ticketDetails.identityCard" required
+              #identityCard="ngModel">
+              <option value="" disabled>Select ID type</option>
+              <option value="Aadhar">Aadhar Card</option>
+              <option value="Passport">Passport</option>
+              <option value="DrivingLicense">Driving License</option>
+            </select>
+            <div *ngIf="identityCard.invalid && identityCard.touched" class="text-danger">
+              <small>ID type is required.</small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="cardNo" class="form-label">Identity Card Number</label>
+            <input type="text" id="cardNo" [(ngModel)]="ticketDetails.cardNo" class="form-control"
+              placeholder="Enter ID card number" required minlength="6" #cardNo="ngModel" />
+            <div *ngIf="cardNo.invalid && cardNo.touched" class="text-danger">
+              <small *ngIf="cardNo.errors?.['required']">ID card number is required.</small>
+              <small *ngIf="cardNo.errors?.['minlength']">
+                ID card number must be at least 6 characters long.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Number and Tickets Row -->
+        <div class="row g-3 align-items-center mb-3">
+          <div class="col-md-6">
+            <label for="contactNo" class="form-label">Contact Number</label>
+            <input type="tel" id="contactNo" class="form-control" [(ngModel)]="ticketDetails.contactNo"
+              placeholder="Enter your contact number" required pattern="^[0-9]{10}$" #contactNo="ngModel" />
+            <div *ngIf="contactNo.invalid && contactNo.touched" class="text-danger">
+              <small *ngIf="contactNo.errors?.['required']">Contact number is required.</small>
+              <small *ngIf="contactNo.errors?.['pattern']">
+                Contact number must be a valid 10-digit number.
+              </small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="noOfTickets" class="form-label">Number of Tickets</label>
+            <input type="number" id="noOfTickets" class="form-control" min="1" [(ngModel)]="ticketDetails.noOfTickets"
+              placeholder="Enter tickets" required #noOfTickets="ngModel" />
+            <div *ngIf="noOfTickets.invalid && noOfTickets.touched" class="text-danger">
+              <small *ngIf="noOfTickets.errors?.['required']">
+                Number of tickets is required.
+              </small>
+              <small *ngIf="noOfTickets.errors?.['min']">
+                At least 1 ticket must be booked.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Valid or Not -->
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="confirmFields" [(ngModel)]="isFormValid" required
+            #confirmFields="ngModel" />
+          <label class="form-check-label" for="confirmFields">Confirm all fields are filled</label>
+          <div *ngIf="confirmFields.invalid && confirmFields.touched" class="text-danger">
+            <small>You must confirm that all fields are filled.</small>
+          </div>
+        </div>
+
+        <!-- Confirm Booking Button -->
+        <div class="text-center">
+          <button type="button" class="btn btn-danger w-100 py-2" (click)="booksEvents()" [disabled]="
+              !isFormValid ||
+              name.invalid ||
+              age.invalid ||
+              identityCard.invalid ||
+              cardNo.invalid ||
+              contactNo.invalid ||
+              noOfTickets.invalid
+            ">
+            <i class="bi bi-ticket-perforated"></i> Confirm Booking
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
