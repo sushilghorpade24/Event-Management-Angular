@@ -1,0 +1,10 @@
+{
+  "routes": [
+    "/layout",
+    "/layout/allEvent",
+    "/layout/home",
+    "/layout/mybookings",
+    "/login",
+    "/register"
+  ]
+}
